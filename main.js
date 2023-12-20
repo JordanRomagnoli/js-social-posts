@@ -38,7 +38,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": "https://unsplash.it/300/300?image=30",
+            "image": null
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -49,7 +49,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=534",
         "author": {
             "name": "Alessandro Sainato",
-            "image": "https://unsplash.it/300/300?image=29"
+            "image": "https://unsplash.it/300/300?image=31"
         },
         "likes": 95,
         "created": "2021-03-05"
@@ -61,14 +61,26 @@ const container = document.getElementById('container');
 
 for(let i = 0; i < posts.length; i++){
 
-    numLike = 0;
+    let imageTemp;
+
+    if(posts[i].author.image == null){
+
+        imageTemp = document.createElement('div');
+        imageTemp.classList.add('profile-pic-default');
+        imageTemp.innerHTML = `<span>${posts[i].author.name[0]}</span>`;
+        
+    }else{
+        imageTemp = document.createElement('img');
+        imageTemp.src = (posts[i].author.image);
+        imageTemp.alt = (posts[i].author.name);
+        imageTemp.classList.add('profile-pic');
+    }
 
     container.innerHTML += `
     <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="${posts[i].author['image']}" alt="Phil Mangione">                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${posts[i].author['name']}</div>
@@ -95,7 +107,8 @@ for(let i = 0; i < posts.length; i++){
             </div>            
         </div>
         `
-    
+        let iconUser = document.querySelector('.post:last-child .post-meta__icon');
+        iconUser.append(imageTemp) 
         
 };
 
